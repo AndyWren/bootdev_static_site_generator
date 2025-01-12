@@ -1,0 +1,23 @@
+[tool.poetry]
+name = "bootdev-static-site-generator"
+version = "0.1.0"
+description = ""
+authors = ["Andrew Wren <awren.eclipse@gmail.com>"]
+readme = "README.md"
+packages = [{ include = "bootdev_static_site_generator", from = "src" }]
+
+[tool.poetry.dependencies]
+python = "^3.12"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.3.4"
+black = "^24.10.0"
+mypy = "^1.14.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
