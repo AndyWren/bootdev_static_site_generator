@@ -27,7 +27,7 @@ def create_public_content(from_path: str = "static", dest_path: str = "public"):
                 shutil.copy(home / content_path / new_file, current)
 
 
-def create_html_content_from_md(from_path, template_path, dest_path):
+def create_html_content_from_md(basepath, from_path, template_path, dest_path):
     home = Path.cwd()
 
     for content in os.walk(from_path):
@@ -42,13 +42,14 @@ def create_html_content_from_md(from_path, template_path, dest_path):
                 new_html_file = new_file
                 new_html_file = new_html_file.replace(".md", ".html")
                 generate_page(
+                    basepath,
                     home / content_path / new_file,
                     template_path,
                     current / new_html_file,
                 )
 
 
-def generate_page(from_path, template_path, dest_path):
+def generate_page(basepath, from_path, template_path, dest_path):
     print(f"Generating page from {from_path} to {dest_path} using {template_path}")
     with open(from_path, "r") as f:
         markdown = f.read()
@@ -61,6 +62,8 @@ def generate_page(from_path, template_path, dest_path):
 
     template_file = template_file.replace("{{ Title }}", html_title)
     template_file = template_file.replace("{{ Content }}", html_body.to_html())
+    template_file = template_file.replace('href="/', f'href="{basepath}')
+    template_file = template_file.replace('src="/', f'src="{basepath}')
 
     with open(dest_path, "w") as d:
         d.write(template_file)
