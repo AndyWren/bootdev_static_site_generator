@@ -14,7 +14,7 @@ class TextType(Enum):
 
 class TextTypePatterns(Enum):
     BOLD = r"\*{2}([^*]+?)\*{2}"
-    ITALIC = r"\*([^*]+?)\*"
+    ITALIC = r"_([^_]+?)_"
     CODE = r"`([^*]+?)`"
     LINK = r"(?<!!)\[([^\[\]]*)\]\(([^\(\)]*)\)"
     IMAGE = r"!\[([^\[\]]*)\]\(([^\(\)]*)\)"
@@ -185,7 +185,7 @@ def text_to_textnodes(text: str):
         TextType.TEXT,
     )
     n = split_nodes([node], "**", TextType.BOLD, TextTypePatterns.BOLD.value)
-    n = split_nodes(n, "*", TextType.ITALIC, TextTypePatterns.ITALIC.value)
+    n = split_nodes(n, "_", TextType.ITALIC, TextTypePatterns.ITALIC.value)
     n = split_nodes(n, "`", TextType.CODE, TextTypePatterns.CODE.value)
     n = split_nodes_image(n)
     n = split_nodes_link(n)
